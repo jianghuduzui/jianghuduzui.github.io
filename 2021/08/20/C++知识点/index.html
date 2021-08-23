@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="泛化之美–C++11可变模版参数的妙用https:&#x2F;&#x2F;www.cnblogs.com&#x2F;qicosmos&#x2F;p&#x2F;4325949.html C++可继承的单例基类模板https:&#x2F;&#x2F;www.cnblogs.com&#x2F;sunchaothu&#x2F;p&#x2F;10353507.html VS 多工程之间管理与调用（超详细）https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34719188&#x2F;article&#x2F;details&#x2F;8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C++知识点">
+<meta property="og:url" content="http://example.com/2021/08/20/C++%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="泛化之美–C++11可变模版参数的妙用https:&#x2F;&#x2F;www.cnblogs.com&#x2F;qicosmos&#x2F;p&#x2F;4325949.html C++可继承的单例基类模板https:&#x2F;&#x2F;www.cnblogs.com&#x2F;sunchaothu&#x2F;p&#x2F;10353507.html VS 多工程之间管理与调用（超详细）https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_34719188&#x2F;article&#x2F;details&#x2F;8">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-20T05:27:49.000Z">
+<meta property="article:modified_time" content="2021-08-23T08:24:40.362Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="C++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/08/20/C++%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>C++知识点 | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/20/C++%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          C++知识点
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-20 13:27:49" itemprop="dateCreated datePublished" datetime="2021-08-20T13:27:49+08:00">2021-08-20</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-23 16:24:40" itemprop="dateModified" datetime="2021-08-23T16:24:40+08:00">2021-08-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="泛化之美–C-11可变模版参数的妙用"><a href="#泛化之美–C-11可变模版参数的妙用" class="headerlink" title="泛化之美–C++11可变模版参数的妙用"></a>泛化之美–C++11可变模版参数的妙用</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/qicosmos/p/4325949.html">https://www.cnblogs.com/qicosmos/p/4325949.html</a></p>
+<h4 id="C-可继承的单例基类模板"><a href="#C-可继承的单例基类模板" class="headerlink" title="C++可继承的单例基类模板"></a>C++可继承的单例基类模板</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunchaothu/p/10353507.html">https://www.cnblogs.com/sunchaothu/p/10353507.html</a></p>
+<h4 id="VS-多工程之间管理与调用（超详细）"><a href="#VS-多工程之间管理与调用（超详细）" class="headerlink" title="VS 多工程之间管理与调用（超详细）"></a>VS 多工程之间管理与调用（超详细）</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34719188/article/details/80956749">https://blog.csdn.net/qq_34719188/article/details/80956749</a></p>
+<h4 id="Type-Trait-和-Type-Utility"><a href="#Type-Trait-和-Type-Utility" class="headerlink" title="Type Trait 和 Type Utility"></a>Type Trait 和 Type Utility</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gardenofhu/p/9310287.html">https://www.cnblogs.com/gardenofhu/p/9310287.html</a></p>
+<h4 id="浅谈内存对齐"><a href="#浅谈内存对齐" class="headerlink" title="浅谈内存对齐"></a>浅谈内存对齐</h4><p><a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2020/04/memory-align">https://murphypei.github.io/blog/2020/04/memory-align</a></p>
+<h4 id="详解C-C-中volatile关键字"><a href="#详解C-C-中volatile关键字" class="headerlink" title="详解C/C++中volatile关键字"></a>详解C/C++中volatile关键字</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44363885/article/details/92838607">https://blog.csdn.net/weixin_44363885/article/details/92838607</a></p>
+<h4 id="C-C-堆栈指引"><a href="#C-C-堆栈指引" class="headerlink" title="C/C++堆栈指引"></a>C/C++堆栈指引</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33695450/article/details/86051255">https://blog.csdn.net/weixin_33695450/article/details/86051255</a></p>
+<h4 id="C-11新特性之十：enable-shared-from-this"><a href="#C-11新特性之十：enable-shared-from-this" class="headerlink" title="C++11新特性之十：enable_shared_from_this"></a>C++11新特性之十：enable_shared_from_this</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/caoshangpa/article/details/79392878">https://blog.csdn.net/caoshangpa/article/details/79392878</a></p>
+<h4 id="Effective-C-notes"><a href="#Effective-C-notes" class="headerlink" title="Effective C++ notes"></a>Effective C++ notes</h4><p>9、令operator=返回一个reference to <em>this(为了实现连锁赋值)<br>10、在operator=中处理自我赋值：确保任何函数如果操作一个以上的对象，而其中多个对象是同一对象时，其行为仍然正确。<br>Widget::operator=(Widget rhs)    //rhs是传入对象的副本，pass by value<br>{<br>      swap(rhs);     //将</em>this的数据和副本的数据做交换<br>      return *this;<br>}</p>
+<p>11、复制对象时勿忘其每一个成分：<br>void logCall(const std::string&amp; funcName);     //制造一个log entry<br>class Customer{<br>public:<br>     Customer(const Customer&amp; rhs);<br>     Customer&amp; operator=(const Cutomer&amp; rhs);<br>private:<br>     std::string name;<br>}</p>
+<p>class PriorityCustomer:public Customer<br>{<br>public:<br>     PriorityCustomer(const PriorityCustomer&amp; rhs):<br>     Customer(rhs),    //调用bass class的copy构造函数<br>     priority(rhs.priority)<br>    {<br>          logCall(“PriorityCustomer copy constructor”);<br>    }<br>     PriorityCustomer&amp; operator=(const PriorityCustomer&amp; rhs)<br>    {<br>             logCall(“PriorityCustomer copy assignment operator”);<br>             Customer::operator=(rhs);<br>             priority=rhs.priority;<br>             return *this;<br>    }<br>private:<br>     int priority;<br>}</p>
+<p>12、RAII（Resource Acquisition is Initialization）<br>为防止资源泄露，使用RAII对象，在构造函数中获得资源并在析构函数中释放资源。<br>两个常用的RAII classes分别是：tr1::shared_ptr 和auto_ptr</p>
+<p>13、普遍的RAII class copying行为是：抑制copying、施以引用计数法（reference counting）。</p>
+<p>14、每个RAII class 应提供一个“取得其所管理之资源”的办法。对原始资源的访问可能经由显示转换或隐式转换。</p>
+<p>15、成对使用new和delete要使用相同的形式</p>
+<p>17、以独立语句将newed对象存储于智能指针内：<br>processWidget(std::tr1::shared_ptr<Widget>(new Widget),priority())   //会造成资源泄露</p>
+<p>18、让接口容易被使用：<br>std::tr1::shared_ptr<Investment> createInvestment()<br>{<br>    std::tr1::shared_ptr<Investment> retVal(static_cast&lt;Investment*&gt;(0),<br>                                                                      getRidOfInvestment);<br>    retVal=…;   //令retVal指向正确的对象<br>    return retVal;<br>}<br>在许多平台上，“跨DLL之new/delete成对运用”会导致运行期错误。</p>
+<p>19、尽量以pass-by-reference-to-const替换pass-by-value,前者高效，且可避免切割问题。<br>此规则并不适用于内置类型，以及STL的迭代器和函数对象。</p>
+<p>20、绝不要返回pointer或reference指向一个local stack对象，或返回reference指向一个heap-allocated对象，或返回pointer或reference指向一个local static对象而有可能同时需要多个这样的对象。</p>
+<p>21、将成员变量声明为private</p>
+<p>22、宁可拿non-member non-friend函数替换member函数，这样做可以增加封装性、包裹弹性、和机能扩充性。</p>
+<p>23、如果你需要为某个函数的所有参数进行类型转换，那么这个函数必须是个non-member。</p>
+<p>26、尽可能延后变量定义式的出现。</p>
+<p>27、尽量避免转型， 在注重效率的代码中避免dynamic_cast,并尝试发展无需转型的替代设计。如果转型必要，试着将他隐藏于函数背后，客户随后可以调用该函数，而不需要将转型放入自己的代码内。尽量使用新式转型，容易辨识，而且有着分门别类的职掌。</p>
+<p>28、返回一个handle（包括references、指针、迭代器）代表对象内部成分总是危险的,帮助const成员函数的行为像个const。</p>
+<p>29、异常安全函数即使发生异常也不会泄露资源或允许任何数据结构败坏。这样的函数分为三种可能的保证：基本型、强烈型、不抛异常型。<br>强烈保证往往能够以copy-and-swap实现出来，但强烈保证并非对所有函数都可实现或具备现实意义。<br>函数提供的“异常安全保证”通常最高只等于其所调用之各个函数的“异常安全保证”中的最弱者。</p>
+<p>31、public意味着“is-a”</p>
+<p>35、virtual 函数的替代方案包括NVI手法及Strategy设计模式的多种形式。NVI手法自身是一个特殊形式的Template Method设计模式。<br>tr1::function 对象的行为就像一般函数指针，这样的对象可接纳“与给定之目标签名式兼容”的所有可调用之物。</p>
+<p>36、绝对不要重新定义继承而来的non-virtual函数。</p>
+<p>37、绝对不要重新定义一个继承而来的缺省参数值，因为缺省参数值是静态绑定，而virtual函数（你唯一应该覆写的东西）却是动态绑定。</p>
+<p>38、在应用域，复合意味着has-a。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"># C++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/20/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="prev" title="深度学习">
+      <i class="fa fa-chevron-left"></i> 深度学习
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/20/Django/" rel="next" title="Django">
+      Django <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B3%9B%E5%8C%96%E4%B9%8B%E7%BE%8E%E2%80%93C-11%E5%8F%AF%E5%8F%98%E6%A8%A1%E7%89%88%E5%8F%82%E6%95%B0%E7%9A%84%E5%A6%99%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">泛化之美–C++11可变模版参数的妙用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E5%8F%AF%E7%BB%A7%E6%89%BF%E7%9A%84%E5%8D%95%E4%BE%8B%E5%9F%BA%E7%B1%BB%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.</span> <span class="nav-text">C++可继承的单例基类模板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#VS-%E5%A4%9A%E5%B7%A5%E7%A8%8B%E4%B9%8B%E9%97%B4%E7%AE%A1%E7%90%86%E4%B8%8E%E8%B0%83%E7%94%A8%EF%BC%88%E8%B6%85%E8%AF%A6%E7%BB%86%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">VS 多工程之间管理与调用（超详细）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Type-Trait-%E5%92%8C-Type-Utility"><span class="nav-number">4.</span> <span class="nav-text">Type Trait 和 Type Utility</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B5%85%E8%B0%88%E5%86%85%E5%AD%98%E5%AF%B9%E9%BD%90"><span class="nav-number">5.</span> <span class="nav-text">浅谈内存对齐</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%A6%E8%A7%A3C-C-%E4%B8%ADvolatile%E5%85%B3%E9%94%AE%E5%AD%97"><span class="nav-number">6.</span> <span class="nav-text">详解C&#x2F;C++中volatile关键字</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-C-%E5%A0%86%E6%A0%88%E6%8C%87%E5%BC%95"><span class="nav-number">7.</span> <span class="nav-text">C&#x2F;C++堆栈指引</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-11%E6%96%B0%E7%89%B9%E6%80%A7%E4%B9%8B%E5%8D%81%EF%BC%9Aenable-shared-from-this"><span class="nav-number">8.</span> <span class="nav-text">C++11新特性之十：enable_shared_from_this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Effective-C-notes"><span class="nav-number">9.</span> <span class="nav-text">Effective C++ notes</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

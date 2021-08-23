@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Muse","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="1、通过cmd调用执行python脚本12345678910111213141516171819202122void CallProcess()&amp;#123;    QProcess p;    &#x2F;&#x2F;QProcessEnvironment env &#x3D; QProcessEnvironment::systemEnvironment();    &#x2F;&#x2F;env.insert(&quot;PYTHONPATH&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Qt知识点（一）">
+<meta property="og:url" content="http://example.com/2021/08/19/Qt%E7%9F%A5%E8%AF%86%E7%82%B9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1、通过cmd调用执行python脚本12345678910111213141516171819202122void CallProcess()&amp;#123;    QProcess p;    &#x2F;&#x2F;QProcessEnvironment env &#x3D; QProcessEnvironment::systemEnvironment();    &#x2F;&#x2F;env.insert(&quot;PYTHONPATH&amp;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-08-19T09:14:52.000Z">
+<meta property="article:modified_time" content="2021-08-23T08:26:18.675Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="Qt">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2021/08/19/Qt%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+
+  <title>Qt知识点（一） | Hexo</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">Hexo</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/19/Qt%E7%9F%A5%E8%AF%86%E7%82%B9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Qt知识点（一）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-08-19 17:14:52" itemprop="dateCreated datePublished" datetime="2021-08-19T17:14:52+08:00">2021-08-19</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2021-08-23 16:26:18" itemprop="dateModified" datetime="2021-08-23T16:26:18+08:00">2021-08-23</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="1、通过cmd调用执行python脚本"><a href="#1、通过cmd调用执行python脚本" class="headerlink" title="1、通过cmd调用执行python脚本"></a>1、通过cmd调用执行python脚本</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">CallProcess</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    QProcess p;</span><br><span class="line">    <span class="comment">//QProcessEnvironment env = QProcessEnvironment::systemEnvironment();</span></span><br><span class="line">    <span class="comment">//env.insert(&quot;PYTHONPATH&quot;, &quot;D:/ProgramFiles/Anaconda3/Lib&quot;);</span></span><br><span class="line">    <span class="comment">//env.insert(&quot;PYTHONHOME&quot;, &quot;D:/ProgramFiles/Anaconda3&quot;);</span></span><br><span class="line">    <span class="comment">//p.setProcessEnvironment(env);</span></span><br><span class="line">    QStringList params;</span><br><span class="line">    QString pythonPath = <span class="string">&quot;cmd.exe&quot;</span>;</span><br><span class="line">    QString pythonScript = <span class="string">&quot;D:/testImg1/pythonFile/getScore.py&quot;</span>;</span><br><span class="line"></span><br><span class="line">    params &lt;&lt; <span class="string">&quot;/C&quot;</span>&lt;&lt;<span class="string">&quot;python&quot;</span> &lt;&lt;pythonScript;</span><br><span class="line"></span><br><span class="line">    p.<span class="built_in">startDetached</span>(pythonPath, params);</span><br><span class="line">    <span class="comment">//p.waitForFinished(-1);</span></span><br><span class="line">    QString p_stdout = p.<span class="built_in">readAll</span>();</span><br><span class="line">    QString p_stderr = p.<span class="built_in">readAllStandardError</span>();</span><br><span class="line">    <span class="keyword">if</span>(!p_stderr.<span class="built_in">isEmpty</span>())</span><br><span class="line">       <span class="built_in">qDebug</span>()&lt;&lt;<span class="string">&quot;Python error:&quot;</span>&lt;&lt;p_stderr;</span><br><span class="line">    <span class="built_in">qDebug</span>()&lt;&lt;<span class="string">&quot;Python result=&quot;</span>&lt;&lt;p_stdout;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>附：<br>QT调用python脚本时遇到的坑（十一大坑全有）：<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/herr_kun/article/details/84570258">https://blog.csdn.net/herr_kun/article/details/84570258</a></p>
+<h4 id="2、Q-PROPERTY-的用法"><a href="#2、Q-PROPERTY-的用法" class="headerlink" title="2、Q_PROPERTY 的用法"></a>2、Q_PROPERTY 的用法</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span> :</span> <span class="keyword">public</span> QObject</span><br><span class="line">&#123;</span><br><span class="line">    <span class="function">Q_OBJECT</span></span><br><span class="line"><span class="function">    <span class="title">Q_PROPERTY</span><span class="params">(<span class="keyword">int</span> age READ age  WRITE setAge NOTIFY ageChanged)</span></span></span><br><span class="line"><span class="function">    <span class="title">Q_CLASSINFO</span><span class="params">(<span class="string">&quot;Author&quot;</span>, <span class="string">&quot;Scorpio&quot;</span>)</span></span></span><br><span class="line"><span class="function">    <span class="title">Q_CLASSINFO</span><span class="params">(<span class="string">&quot;Version&quot;</span>, <span class="string">&quot;1.0&quot;</span>)</span></span></span><br><span class="line"><span class="function"><span class="keyword">public</span>:</span></span><br><span class="line"><span class="function">protected:</span></span><br><span class="line"><span class="function">    int m_age;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">explicit</span> <span class="title">Object</span><span class="params">(QString name, QObject *parent = <span class="number">0</span>)</span>:QObject(parent)</span></span><br><span class="line"><span class="function">    &#123;</span></span><br><span class="line">        m_name = name;</span><br><span class="line">        <span class="built_in">setObjectName</span>(m_name);</span><br><span class="line">        <span class="built_in">connect</span>(<span class="keyword">this</span>, <span class="built_in">SIGNAL</span>(<span class="built_in">ageChanged</span>(<span class="keyword">int</span>)), <span class="keyword">this</span>, <span class="built_in">SLOT</span>(<span class="built_in">onAgeChanged</span>(<span class="keyword">int</span>)));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">age</span><span class="params">()</span><span class="keyword">const</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> m_age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setAge</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; age)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        m_age = age;</span><br><span class="line">        <span class="function">emit <span class="title">ageChanged</span><span class="params">(m_age)</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">signals:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">ageChanged</span><span class="params">(<span class="keyword">int</span> age)</span></span>;</span><br><span class="line"><span class="keyword">public</span> slots:</span><br><span class="line">     <span class="function"><span class="keyword">void</span> <span class="title">onAgeChanged</span><span class="params">(<span class="keyword">int</span> age)</span></span></span><br><span class="line"><span class="function">     </span>&#123;</span><br><span class="line">         <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;age changed:&quot;</span> &lt;&lt; age;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">QCoreApplication <span class="title">a</span><span class="params">(argc, argv)</span></span>;</span><br><span class="line">    <span class="function">Object <span class="title">ob</span><span class="params">(<span class="string">&quot;object&quot;</span>)</span></span>;</span><br><span class="line">    <span class="comment">//内省intropection,运行时查询对象信息</span></span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;object name: &quot;</span> &lt;&lt; ob.<span class="built_in">objectName</span>();</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;class name: &quot;</span> &lt;&lt; ob.<span class="built_in">metaObject</span>()-&gt;<span class="built_in">className</span>();</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;isWidgetType: &quot;</span> &lt;&lt; ob.<span class="built_in">isWidgetType</span>();</span><br><span class="line">    <span class="built_in">qDebug</span>() &lt;&lt; <span class="string">&quot;inherit: &quot;</span> &lt;&lt; ob.<span class="built_in">inherits</span>(<span class="string">&quot;QObject&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> a.<span class="built_in">exec</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="3、信号与槽的深入"><a href="#3、信号与槽的深入" class="headerlink" title="3、信号与槽的深入"></a>3、信号与槽的深入</h4><p><a target="_blank" rel="noopener" href="https://www.devbean.net/2012/09/qt-study-road-2-deep-qt5-signals-slots-syntax/">https://www.devbean.net/2012/09/qt-study-road-2-deep-qt5-signals-slots-syntax/</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/mushroom/p/5701330.html">https://www.cnblogs.com/mushroom/p/5701330.html</a></p>
+<h4 id="4、在非gui线程使用QMessageBox"><a href="#4、在非gui线程使用QMessageBox" class="headerlink" title="4、在非gui线程使用QMessageBox"></a>4、在非gui线程使用QMessageBox</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/findumars/p/5034524.html">https://www.cnblogs.com/findumars/p/5034524.html</a></p>
+<h4 id="5、Qt程序打包发布"><a href="#5、Qt程序打包发布" class="headerlink" title="5、Qt程序打包发布"></a>5、Qt程序打包发布</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiangtingshen/p/10988325.html">https://www.cnblogs.com/xiangtingshen/p/10988325.html</a></p>
+<h4 id="6、QT事件处理机制"><a href="#6、QT事件处理机制" class="headerlink" title="6、QT事件处理机制"></a>6、QT事件处理机制</h4><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_9291927/1868744">https://blog.51cto.com/u_9291927/1868744</a></p>
+<h4 id="7、通过QAction-setData-传送自定义的数据"><a href="#7、通过QAction-setData-传送自定义的数据" class="headerlink" title="7、通过QAction::setData , 传送自定义的数据"></a>7、通过QAction::setData , 传送自定义的数据</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/stabber/archive/2012/12/07/2806787.html">https://www.cnblogs.com/stabber/archive/2012/12/07/2806787.html</a></p>
+<h4 id="8、Qt安装包制作-QIF"><a href="#8、Qt安装包制作-QIF" class="headerlink" title="8、Qt安装包制作 QIF"></a>8、Qt安装包制作 QIF</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mars_xiaolei/article/details/83825447">https://blog.csdn.net/mars_xiaolei/article/details/83825447</a></p>
+<h4 id="9、Qt-pro-编译完成后做某些操作"><a href="#9、Qt-pro-编译完成后做某些操作" class="headerlink" title="9、Qt.pro.编译完成后做某些操作"></a>9、Qt.pro.编译完成后做某些操作</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cppskill/p/12987861.html">https://www.cnblogs.com/cppskill/p/12987861.html</a></p>
+<h4 id="Qt高级——Qt信号槽机制源码解析"><a href="#Qt高级——Qt信号槽机制源码解析" class="headerlink" title="Qt高级——Qt信号槽机制源码解析"></a>Qt高级——Qt信号槽机制源码解析</h4><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_9291927/2070398">https://blog.51cto.com/u_9291927/2070398</a></p>
+<h4 id="QT下的Modbus-TCP-通讯"><a href="#QT下的Modbus-TCP-通讯" class="headerlink" title="QT下的Modbus TCP 通讯"></a>QT下的Modbus TCP 通讯</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44894312/article/details/108197280">https://blog.csdn.net/weixin_44894312/article/details/108197280</a></p>
+<h4 id="QT开发（十九）——QT内存泄漏问题"><a href="#QT开发（十九）——QT内存泄漏问题" class="headerlink" title="QT开发（十九）——QT内存泄漏问题"></a>QT开发（十九）——QT内存泄漏问题</h4><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/u_9291927/1871608">https://blog.51cto.com/u_9291927/1871608</a></p>
+<h4 id="在Linux下使用linuxdeployqt发布Qt程序"><a href="#在Linux下使用linuxdeployqt发布Qt程序" class="headerlink" title="在Linux下使用linuxdeployqt发布Qt程序"></a>在Linux下使用linuxdeployqt发布Qt程序</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/linuxAndMcu/p/11016322.html">https://www.cnblogs.com/linuxAndMcu/p/11016322.html</a></p>
+<h4 id="快速认识-ORM"><a href="#快速认识-ORM" class="headerlink" title="快速认识 ORM"></a>快速认识 ORM</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cE-GDUxnPN-BmBV8lVoREA">https://mp.weixin.qq.com/s/cE-GDUxnPN-BmBV8lVoREA</a></p>
+<h4 id="利用-dogtail-快速进行-GUI-自动化测试"><a href="#利用-dogtail-快速进行-GUI-自动化测试" class="headerlink" title="利用 dogtail 快速进行 GUI 自动化测试"></a>利用 dogtail 快速进行 GUI 自动化测试</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cOCnBH-3oAvQawDgDb4Plw">https://mp.weixin.qq.com/s/cOCnBH-3oAvQawDgDb4Plw</a></p>
+<h4 id="基于-Qt-的图表库"><a href="#基于-Qt-的图表库" class="headerlink" title="基于 Qt 的图表库"></a>基于 Qt 的图表库</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/XUIpeXGqi_rwoRKqHJrceA">https://mp.weixin.qq.com/s/XUIpeXGqi_rwoRKqHJrceA</a></p>
+<h4 id="C-主流报表框架"><a href="#C-主流报表框架" class="headerlink" title="C++ 主流报表框架"></a>C++ 主流报表框架</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/KK11YxFuRUzbRCDsvFWPWw">https://mp.weixin.qq.com/s/KK11YxFuRUzbRCDsvFWPWw</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Qt/" rel="tag"># Qt</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/08/19/%E6%96%AD%E7%82%B9%E7%BB%AD%E4%BC%A0Client%E7%AB%AFC-%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81/" rel="prev" title="断点续传Client端C++实现代码">
+      <i class="fa fa-chevron-left"></i> 断点续传Client端C++实现代码
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2021/08/20/%E6%9D%82%E9%A1%B9/" rel="next" title="杂项">
+      杂项 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1%E3%80%81%E9%80%9A%E8%BF%87cmd%E8%B0%83%E7%94%A8%E6%89%A7%E8%A1%8Cpython%E8%84%9A%E6%9C%AC"><span class="nav-number">1.</span> <span class="nav-text">1、通过cmd调用执行python脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2%E3%80%81Q-PROPERTY-%E7%9A%84%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">2、Q_PROPERTY 的用法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3%E3%80%81%E4%BF%A1%E5%8F%B7%E4%B8%8E%E6%A7%BD%E7%9A%84%E6%B7%B1%E5%85%A5"><span class="nav-number">3.</span> <span class="nav-text">3、信号与槽的深入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4%E3%80%81%E5%9C%A8%E9%9D%9Egui%E7%BA%BF%E7%A8%8B%E4%BD%BF%E7%94%A8QMessageBox"><span class="nav-number">4.</span> <span class="nav-text">4、在非gui线程使用QMessageBox</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5%E3%80%81Qt%E7%A8%8B%E5%BA%8F%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83"><span class="nav-number">5.</span> <span class="nav-text">5、Qt程序打包发布</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6%E3%80%81QT%E4%BA%8B%E4%BB%B6%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6"><span class="nav-number">6.</span> <span class="nav-text">6、QT事件处理机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7%E3%80%81%E9%80%9A%E8%BF%87QAction-setData-%E4%BC%A0%E9%80%81%E8%87%AA%E5%AE%9A%E4%B9%89%E7%9A%84%E6%95%B0%E6%8D%AE"><span class="nav-number">7.</span> <span class="nav-text">7、通过QAction::setData , 传送自定义的数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8%E3%80%81Qt%E5%AE%89%E8%A3%85%E5%8C%85%E5%88%B6%E4%BD%9C-QIF"><span class="nav-number">8.</span> <span class="nav-text">8、Qt安装包制作 QIF</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9%E3%80%81Qt-pro-%E7%BC%96%E8%AF%91%E5%AE%8C%E6%88%90%E5%90%8E%E5%81%9A%E6%9F%90%E4%BA%9B%E6%93%8D%E4%BD%9C"><span class="nav-number">9.</span> <span class="nav-text">9、Qt.pro.编译完成后做某些操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Qt%E9%AB%98%E7%BA%A7%E2%80%94%E2%80%94Qt%E4%BF%A1%E5%8F%B7%E6%A7%BD%E6%9C%BA%E5%88%B6%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="nav-number">10.</span> <span class="nav-text">Qt高级——Qt信号槽机制源码解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#QT%E4%B8%8B%E7%9A%84Modbus-TCP-%E9%80%9A%E8%AE%AF"><span class="nav-number">11.</span> <span class="nav-text">QT下的Modbus TCP 通讯</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#QT%E5%BC%80%E5%8F%91%EF%BC%88%E5%8D%81%E4%B9%9D%EF%BC%89%E2%80%94%E2%80%94QT%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E9%97%AE%E9%A2%98"><span class="nav-number">12.</span> <span class="nav-text">QT开发（十九）——QT内存泄漏问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8Linux%E4%B8%8B%E4%BD%BF%E7%94%A8linuxdeployqt%E5%8F%91%E5%B8%83Qt%E7%A8%8B%E5%BA%8F"><span class="nav-number">13.</span> <span class="nav-text">在Linux下使用linuxdeployqt发布Qt程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BF%AB%E9%80%9F%E8%AE%A4%E8%AF%86-ORM"><span class="nav-number">14.</span> <span class="nav-text">快速认识 ORM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-dogtail-%E5%BF%AB%E9%80%9F%E8%BF%9B%E8%A1%8C-GUI-%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95"><span class="nav-number">15.</span> <span class="nav-text">利用 dogtail 快速进行 GUI 自动化测试</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E-Qt-%E7%9A%84%E5%9B%BE%E8%A1%A8%E5%BA%93"><span class="nav-number">16.</span> <span class="nav-text">基于 Qt 的图表库</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#C-%E4%B8%BB%E6%B5%81%E6%8A%A5%E8%A1%A8%E6%A1%86%E6%9E%B6"><span class="nav-number">17.</span> <span class="nav-text">C++ 主流报表框架</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">John Doe</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
