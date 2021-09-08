@@ -145,6 +145,130 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/08/C++%E8%AE%BE%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/08/C++%E8%AE%BE%E8%AE%A1/" class="post-title-link" itemprop="url">C++设计</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-08 13:51:16 / Modified: 14:02:34" itemprop="dateCreated datePublished" datetime="2021-09-08T13:51:16+08:00">2021-09-08</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h4 id="模板特化"><a href="#模板特化" class="headerlink" title="模板特化"></a>模板特化</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//主模板</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::vector&lt;T&gt; elems;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(T <span class="keyword">const</span>&amp; elem)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		elems.<span class="built_in">push_back</span>(elem);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//完全特化</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;</span>std::string&gt;</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::deque&lt;std::string&gt; elems;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(std::string <span class="keyword">const</span>&amp; elem)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		elems.<span class="built_in">push_back</span>(elem);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//部分特化</span></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;</span>T*&gt;</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">	std::list&lt;T*&gt; elems;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(T* &amp; elem)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		elems.<span class="built_in">push_front</span>(elem);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="traits技术"><a href="#traits技术" class="headerlink" title="traits技术"></a>traits技术</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">typename</span> numT&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">fp_traits</span> &#123;</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">fp_traits</span>&lt;</span><span class="keyword">float</span>&gt;&#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">float</span> fp_type;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span>max_exponent = FLT_MAX_EXP&#125;;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> fp_type <span class="title">epsilon</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;	<span class="keyword">return</span> FLT_EPSILON;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span> &lt;&gt;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">fp_traits</span>&lt;</span><span class="keyword">double</span>&gt; &#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">double</span> fp_type;</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> max_exponent = DBL_MAX_EXP &#125;;</span><br><span class="line">	<span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> fp_type <span class="title">epsilon</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> DBL_EPSILON;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> numT&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">matrix</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> numT num_type;</span><br><span class="line">	<span class="keyword">typedef</span>	fp_traits&lt;num_type&gt; num_type_info;</span><br><span class="line">	<span class="function"><span class="keyword">inline</span> num_type <span class="title">epsilon</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> num_type_info::<span class="built_in">epsilon</span>();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="类型分类技术"><a href="#类型分类技术" class="headerlink" title="类型分类技术"></a>类型分类技术</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TypeInfo</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> IsPtr = <span class="number">0</span>, IsRefT = <span class="number">0</span>, IsArrayT = <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">typedef</span> T baseT;</span><br><span class="line">	<span class="keyword">typedef</span> T bottomT;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TypeInfo</span>&lt;</span>T*&gt;&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> IsPtr = <span class="number">1</span>, IsRefT = <span class="number">0</span>, IsArrayT = <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">typedef</span> T baseT;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> TypeInfo&lt;T&gt;::bottomT bottomT;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TypeInfo</span>&lt;</span>T&amp;&gt; &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> IsPtr = <span class="number">0</span>, IsRefT = <span class="number">1</span>, IsArrayT = <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="keyword">typedef</span> T baseT;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> TypeInfo&lt;T&gt;::bottomT bottomT;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T, <span class="keyword">size_t</span> N&gt;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TypeInfo</span>&lt;</span>T[N]&gt; &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="class"><span class="keyword">enum</span> &#123;</span> IsPtr = <span class="number">0</span>, IsRefT = <span class="number">0</span>, IsArrayT = <span class="number">1</span> &#125;;</span><br><span class="line">	<span class="keyword">typedef</span> T baseT;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">typename</span> TypeInfo&lt;T&gt;::bottomT bottomT;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h4 id="应用模板特化降低代码膨胀"><a href="#应用模板特化降低代码膨胀" class="headerlink" title="应用模板特化降低代码膨胀"></a>应用模板特化降低代码膨胀</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vector</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">	T* v;</span><br><span class="line">	<span class="keyword">int</span> sz;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="built_in">Vector</span>(<span class="keyword">int</span> size = <span class="number">100</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		v = <span class="keyword">new</span> T[size];</span><br><span class="line">		sz = size;</span><br><span class="line">	&#125;;</span><br><span class="line">	~<span class="built_in">Vector</span>()</span><br><span class="line">	&#123;	<span class="keyword">delete</span>[] v; &#125;;</span><br><span class="line">	T&amp; <span class="keyword">operator</span>[] (<span class="keyword">int</span> i)</span><br><span class="line">	&#123;	<span class="keyword">return</span> v[i]; &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> Vector&lt;<span class="keyword">void</span>*&gt; VPVector;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="class"><span class="keyword">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vector</span>&lt;</span>T*&gt; :<span class="keyword">public</span> VPVector &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	T*&amp; <span class="keyword">operator</span>[] (<span class="keyword">int</span> i)&#123;</span><br><span class="line">		<span class="keyword">return</span> (T*&amp;)(VPVector::<span class="keyword">operator</span>[](i));</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/09/06/C-C-%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86%E9%94%A6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/09/06/C-C-%E9%9D%A2%E8%AF%95%E9%A2%98%E9%9B%86%E9%94%A6/" class="post-title-link" itemprop="url">C/C++面试题集锦</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-09-06 11:05:47 / Modified: 11:06:13" itemprop="dateCreated datePublished" datetime="2021-09-06T11:05:47+08:00">2021-09-06</time>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/23/%E4%B8%96%E7%95%8C%E4%B8%8A%E6%9C%80%E9%81%A5%E8%BF%9C%E7%9A%84%E8%B7%9D%E7%A6%BB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -983,187 +1107,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/20/C++%E7%9F%A5%E8%AF%86%E7%82%B9/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/20/C++%E7%9F%A5%E8%AF%86%E7%82%B9/" class="post-title-link" itemprop="url">C++知识点</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-20 13:27:49" itemprop="dateCreated datePublished" datetime="2021-08-20T13:27:49+08:00">2021-08-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-23 16:24:40" itemprop="dateModified" datetime="2021-08-23T16:24:40+08:00">2021-08-23</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="泛化之美–C-11可变模版参数的妙用"><a href="#泛化之美–C-11可变模版参数的妙用" class="headerlink" title="泛化之美–C++11可变模版参数的妙用"></a>泛化之美–C++11可变模版参数的妙用</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/qicosmos/p/4325949.html">https://www.cnblogs.com/qicosmos/p/4325949.html</a></p>
-<h4 id="C-可继承的单例基类模板"><a href="#C-可继承的单例基类模板" class="headerlink" title="C++可继承的单例基类模板"></a>C++可继承的单例基类模板</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sunchaothu/p/10353507.html">https://www.cnblogs.com/sunchaothu/p/10353507.html</a></p>
-<h4 id="VS-多工程之间管理与调用（超详细）"><a href="#VS-多工程之间管理与调用（超详细）" class="headerlink" title="VS 多工程之间管理与调用（超详细）"></a>VS 多工程之间管理与调用（超详细）</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_34719188/article/details/80956749">https://blog.csdn.net/qq_34719188/article/details/80956749</a></p>
-<h4 id="Type-Trait-和-Type-Utility"><a href="#Type-Trait-和-Type-Utility" class="headerlink" title="Type Trait 和 Type Utility"></a>Type Trait 和 Type Utility</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gardenofhu/p/9310287.html">https://www.cnblogs.com/gardenofhu/p/9310287.html</a></p>
-<h4 id="浅谈内存对齐"><a href="#浅谈内存对齐" class="headerlink" title="浅谈内存对齐"></a>浅谈内存对齐</h4><p><a target="_blank" rel="noopener" href="https://murphypei.github.io/blog/2020/04/memory-align">https://murphypei.github.io/blog/2020/04/memory-align</a></p>
-<h4 id="详解C-C-中volatile关键字"><a href="#详解C-C-中volatile关键字" class="headerlink" title="详解C/C++中volatile关键字"></a>详解C/C++中volatile关键字</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44363885/article/details/92838607">https://blog.csdn.net/weixin_44363885/article/details/92838607</a></p>
-<h4 id="C-C-堆栈指引"><a href="#C-C-堆栈指引" class="headerlink" title="C/C++堆栈指引"></a>C/C++堆栈指引</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_33695450/article/details/86051255">https://blog.csdn.net/weixin_33695450/article/details/86051255</a></p>
-<h4 id="C-11新特性之十：enable-shared-from-this"><a href="#C-11新特性之十：enable-shared-from-this" class="headerlink" title="C++11新特性之十：enable_shared_from_this"></a>C++11新特性之十：enable_shared_from_this</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/caoshangpa/article/details/79392878">https://blog.csdn.net/caoshangpa/article/details/79392878</a></p>
-<h4 id="Effective-C-notes"><a href="#Effective-C-notes" class="headerlink" title="Effective C++ notes"></a>Effective C++ notes</h4><p>9、令operator=返回一个reference to <em>this(为了实现连锁赋值)<br>10、在operator=中处理自我赋值：确保任何函数如果操作一个以上的对象，而其中多个对象是同一对象时，其行为仍然正确。<br>Widget::operator=(Widget rhs)    //rhs是传入对象的副本，pass by value<br>{<br>      swap(rhs);     //将</em>this的数据和副本的数据做交换<br>      return *this;<br>}</p>
-<p>11、复制对象时勿忘其每一个成分：<br>void logCall(const std::string&amp; funcName);     //制造一个log entry<br>class Customer{<br>public:<br>     Customer(const Customer&amp; rhs);<br>     Customer&amp; operator=(const Cutomer&amp; rhs);<br>private:<br>     std::string name;<br>}</p>
-<p>class PriorityCustomer:public Customer<br>{<br>public:<br>     PriorityCustomer(const PriorityCustomer&amp; rhs):<br>     Customer(rhs),    //调用bass class的copy构造函数<br>     priority(rhs.priority)<br>    {<br>          logCall(“PriorityCustomer copy constructor”);<br>    }<br>     PriorityCustomer&amp; operator=(const PriorityCustomer&amp; rhs)<br>    {<br>             logCall(“PriorityCustomer copy assignment operator”);<br>             Customer::operator=(rhs);<br>             priority=rhs.priority;<br>             return *this;<br>    }<br>private:<br>     int priority;<br>}</p>
-<p>12、RAII（Resource Acquisition is Initialization）<br>为防止资源泄露，使用RAII对象，在构造函数中获得资源并在析构函数中释放资源。<br>两个常用的RAII classes分别是：tr1::shared_ptr 和auto_ptr</p>
-<p>13、普遍的RAII class copying行为是：抑制copying、施以引用计数法（reference counting）。</p>
-<p>14、每个RAII class 应提供一个“取得其所管理之资源”的办法。对原始资源的访问可能经由显示转换或隐式转换。</p>
-<p>15、成对使用new和delete要使用相同的形式</p>
-<p>17、以独立语句将newed对象存储于智能指针内：<br>processWidget(std::tr1::shared_ptr<Widget>(new Widget),priority())   //会造成资源泄露</p>
-<p>18、让接口容易被使用：<br>std::tr1::shared_ptr<Investment> createInvestment()<br>{<br>    std::tr1::shared_ptr<Investment> retVal(static_cast&lt;Investment*&gt;(0),<br>                                                                      getRidOfInvestment);<br>    retVal=…;   //令retVal指向正确的对象<br>    return retVal;<br>}<br>在许多平台上，“跨DLL之new/delete成对运用”会导致运行期错误。</p>
-<p>19、尽量以pass-by-reference-to-const替换pass-by-value,前者高效，且可避免切割问题。<br>此规则并不适用于内置类型，以及STL的迭代器和函数对象。</p>
-<p>20、绝不要返回pointer或reference指向一个local stack对象，或返回reference指向一个heap-allocated对象，或返回pointer或reference指向一个local static对象而有可能同时需要多个这样的对象。</p>
-<p>21、将成员变量声明为private</p>
-<p>22、宁可拿non-member non-friend函数替换member函数，这样做可以增加封装性、包裹弹性、和机能扩充性。</p>
-<p>23、如果你需要为某个函数的所有参数进行类型转换，那么这个函数必须是个non-member。</p>
-<p>26、尽可能延后变量定义式的出现。</p>
-<p>27、尽量避免转型， 在注重效率的代码中避免dynamic_cast,并尝试发展无需转型的替代设计。如果转型必要，试着将他隐藏于函数背后，客户随后可以调用该函数，而不需要将转型放入自己的代码内。尽量使用新式转型，容易辨识，而且有着分门别类的职掌。</p>
-<p>28、返回一个handle（包括references、指针、迭代器）代表对象内部成分总是危险的,帮助const成员函数的行为像个const。</p>
-<p>29、异常安全函数即使发生异常也不会泄露资源或允许任何数据结构败坏。这样的函数分为三种可能的保证：基本型、强烈型、不抛异常型。<br>强烈保证往往能够以copy-and-swap实现出来，但强烈保证并非对所有函数都可实现或具备现实意义。<br>函数提供的“异常安全保证”通常最高只等于其所调用之各个函数的“异常安全保证”中的最弱者。</p>
-<p>31、public意味着“is-a”</p>
-<p>35、virtual 函数的替代方案包括NVI手法及Strategy设计模式的多种形式。NVI手法自身是一个特殊形式的Template Method设计模式。<br>tr1::function 对象的行为就像一般函数指针，这样的对象可接纳“与给定之目标签名式兼容”的所有可调用之物。</p>
-<p>36、绝对不要重新定义继承而来的non-virtual函数。</p>
-<p>37、绝对不要重新定义一个继承而来的缺省参数值，因为缺省参数值是静态绑定，而virtual函数（你唯一应该覆写的东西）却是动态绑定。</p>
-<p>38、在应用域，复合意味着has-a。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/20/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2021/08/20/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">深度学习</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2021-08-20 13:19:41" itemprop="dateCreated datePublished" datetime="2021-08-20T13:19:41+08:00">2021-08-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2021-08-23 16:24:53" itemprop="dateModified" datetime="2021-08-23T16:24:53+08:00">2021-08-23</time>
-              </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="使用pycharm调试远程服务器上的程序"><a href="#使用pycharm调试远程服务器上的程序" class="headerlink" title="使用pycharm调试远程服务器上的程序"></a>使用pycharm调试远程服务器上的程序</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lemon-feng/p/11302314.html">https://www.cnblogs.com/lemon-feng/p/11302314.html</a></p>
-<h4 id="卷积神经网络的参数计算"><a href="#卷积神经网络的参数计算" class="headerlink" title="卷积神经网络的参数计算"></a>卷积神经网络的参数计算</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qian99/article/details/79008053">https://blog.csdn.net/qian99/article/details/79008053</a></p>
-<h4 id="深度有趣-人工智能实战项目合集"><a href="#深度有趣-人工智能实战项目合集" class="headerlink" title="深度有趣 - 人工智能实战项目合集"></a>深度有趣 - 人工智能实战项目合集</h4><p><a target="_blank" rel="noopener" href="https://github.com/Honlan/DeepInterests">https://github.com/Honlan/DeepInterests</a></p>
-<h4 id="权重初始化方法及适用情况"><a href="#权重初始化方法及适用情况" class="headerlink" title="权重初始化方法及适用情况"></a>权重初始化方法及适用情况</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39875161/article/details/92851681">https://blog.csdn.net/weixin_39875161/article/details/92851681</a></p>
-<h4 id="Pytorch-单机多卡数据并行DataParallel"><a href="#Pytorch-单机多卡数据并行DataParallel" class="headerlink" title="Pytorch - 单机多卡数据并行DataParallel"></a>Pytorch - 单机多卡数据并行DataParallel</h4><p><a target="_blank" rel="noopener" href="https://www.aiuai.cn/aifarm1340.html">https://www.aiuai.cn/aifarm1340.html</a><br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/86441879">https://zhuanlan.zhihu.com/p/86441879</a></p>
-<h4 id="Pytorch-如何高效使用GPU"><a href="#Pytorch-如何高效使用GPU" class="headerlink" title="Pytorch 如何高效使用GPU"></a>Pytorch 如何高效使用GPU</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/kyle1314608/article/details/100595873?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.edu_weight&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.edu_weight">https://blog.csdn.net/kyle1314608/article/details/100595873?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.edu_weight&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromMachineLearnPai2-1.edu_weight</a></p>
-<h4 id="Pytorch的BatchNorm层使用中容易出现的问题"><a href="#Pytorch的BatchNorm层使用中容易出现的问题" class="headerlink" title="Pytorch的BatchNorm层使用中容易出现的问题"></a>Pytorch的BatchNorm层使用中容易出现的问题</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/LoseInVain/article/details/86476010">https://blog.csdn.net/LoseInVain/article/details/86476010</a></p>
-<h4 id="深入浅出的讲解傅里叶变换（真正的通俗易懂）"><a href="#深入浅出的讲解傅里叶变换（真正的通俗易懂）" class="headerlink" title="深入浅出的讲解傅里叶变换（真正的通俗易懂）"></a>深入浅出的讲解傅里叶变换（真正的通俗易懂）</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/h2zZhou/p/8405717.html">https://www.cnblogs.com/h2zZhou/p/8405717.html</a></p>
-<h4 id="如何通俗的理解高斯混合模型（Gaussian-Mixture-Models"><a href="#如何通俗的理解高斯混合模型（Gaussian-Mixture-Models" class="headerlink" title="如何通俗的理解高斯混合模型（Gaussian Mixture Models"></a>如何通俗的理解高斯混合模型（Gaussian Mixture Models</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/151671154">https://zhuanlan.zhihu.com/p/151671154</a></p>
-<h4 id="分类中解决类别不平衡问题"><a href="#分类中解决类别不平衡问题" class="headerlink" title="分类中解决类别不平衡问题"></a>分类中解决类别不平衡问题</h4><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/36381828">https://zhuanlan.zhihu.com/p/36381828</a></p>
-<h4 id="机器学习高频面试题-41道"><a href="#机器学习高频面试题-41道" class="headerlink" title="机器学习高频面试题(41道)"></a>机器学习高频面试题(41道)</h4><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/2b375a770f6e">https://www.jianshu.com/p/2b375a770f6e</a></p>
-<h4 id="【错误率、精度、查准率、查全率和F1度量】详细介绍"><a href="#【错误率、精度、查准率、查全率和F1度量】详细介绍" class="headerlink" title="【错误率、精度、查准率、查全率和F1度量】详细介绍"></a>【错误率、精度、查准率、查全率和F1度量】详细介绍</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzI5NDMzMjY1MA==&amp;mid=2247484127&amp;idx=1&amp;sn=9e59dc3f6f8a152e63361c399cb7124c&amp;chksm=ec65335adb12ba4c86d6c5d88dfb0d2d4e5e06e264015cffaf2ce60e6d447fe7f27458f98c99&amp;mpshare=1&amp;scene=1&amp;srcid=0510aMs5BEfnLqyCAg5otGpZ#rd">https://mp.weixin.qq.com/s?__biz=MzI5NDMzMjY1MA==&amp;mid=2247484127&amp;idx=1&amp;sn=9e59dc3f6f8a152e63361c399cb7124c&amp;chksm=ec65335adb12ba4c86d6c5d88dfb0d2d4e5e06e264015cffaf2ce60e6d447fe7f27458f98c99&amp;mpshare=1&amp;scene=1&amp;srcid=0510aMs5BEfnLqyCAg5otGpZ#rd</a></p>
-<h4 id="模型评估指标AUC（area-under-the-curve"><a href="#模型评估指标AUC（area-under-the-curve" class="headerlink" title="模型评估指标AUC（area under the curve)"></a>模型评估指标AUC（area under the curve)</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/liweibin1994/article/details/79462554?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight">https://blog.csdn.net/liweibin1994/article/details/79462554?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.edu_weight</a></p>
-<h4 id="异常检测"><a href="#异常检测" class="headerlink" title="异常检测"></a>异常检测</h4><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/620b584c2941">https://www.jianshu.com/p/620b584c2941</a></p>
-<h4 id="YOLO-v3-目标检测的-PyTorch-实现"><a href="#YOLO-v3-目标检测的-PyTorch-实现" class="headerlink" title="YOLO v3 目标检测的 PyTorch 实现"></a>YOLO v3 目标检测的 PyTorch 实现</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40787712/article/details/88686804">https://blog.csdn.net/weixin_40787712/article/details/88686804</a></p>
-<h4 id="YOLO框架简述"><a href="#YOLO框架简述" class="headerlink" title="YOLO框架简述"></a>YOLO框架简述</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_30815237/article/details/91949543">https://blog.csdn.net/qq_30815237/article/details/91949543</a></p>
-<h4 id="最容易理解的对卷积-convolution-的解释"><a href="#最容易理解的对卷积-convolution-的解释" class="headerlink" title="最容易理解的对卷积(convolution)的解释"></a>最容易理解的对卷积(convolution)的解释</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/bitcarmanlee/article/details/54729807">https://blog.csdn.net/bitcarmanlee/article/details/54729807</a></p>
-<h4 id="非极大值抑制-nms-算法详解-python"><a href="#非极大值抑制-nms-算法详解-python" class="headerlink" title="非极大值抑制(nms)算法详解[python]"></a>非极大值抑制(nms)算法详解[python]</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lz867422770/article/details/100019587">https://blog.csdn.net/lz867422770/article/details/100019587</a></p>
-<h4 id="目标检测之Faster-RCNN的pytorch代码详解-模型准备篇"><a href="#目标检测之Faster-RCNN的pytorch代码详解-模型准备篇" class="headerlink" title="目标检测之Faster-RCNN的pytorch代码详解(模型准备篇)"></a>目标检测之Faster-RCNN的pytorch代码详解(模型准备篇)</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Air_2014/article/details/101275629">https://blog.csdn.net/Air_2014/article/details/101275629</a></p>
-<h4 id="Faster-RCNN-学习笔记"><a href="#Faster-RCNN-学习笔记" class="headerlink" title="Faster RCNN 学习笔记"></a>Faster RCNN 学习笔记</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangyong/p/8513563.html">https://www.cnblogs.com/wangyong/p/8513563.html</a></p>
-<h4 id="回归损失函数1：L1-loss-L2-loss以及Smooth-L1-Loss的对比"><a href="#回归损失函数1：L1-loss-L2-loss以及Smooth-L1-Loss的对比" class="headerlink" title="回归损失函数1：L1 loss, L2 loss以及Smooth L1 Loss的对比"></a>回归损失函数1：L1 loss, L2 loss以及Smooth L1 Loss的对比</h4><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wangguchangqing/p/12021638.html">https://www.cnblogs.com/wangguchangqing/p/12021638.html</a></p>
-<h4 id="语义分割看这一篇就够了！"><a href="#语义分割看这一篇就够了！" class="headerlink" title="语义分割看这一篇就够了！"></a>语义分割看这一篇就够了！</h4><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/JianqiuChen/article/details/105332206">https://blog.csdn.net/JianqiuChen/article/details/105332206</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1233,12 +1176,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
